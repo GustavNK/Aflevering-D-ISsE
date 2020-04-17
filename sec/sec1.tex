@@ -1,0 +1,160 @@
+\documentclass[../main.tex]{subfiles}
+\graphicspath{{fig/}{../fig/}}
+
+\begin{document}
+
+\subsection{System specifikation}
+\subsubsection{Mål og funktion}
+%Skriv tekst der fortæller om projektets mål og funktion
+I denne opgave vil vi beskrive designet af vores system for en undergrunds-cykelkælder. Systemet implementeres ved at en cykel kan indføres i en terminal. Cyklen transporteres så ned i en undergrunds-bevaring, hvorfra den kan hentes senere mod betaling baseret på opbevaringstid. Styrken i vores system kommer af dens fordelagtige udnyttelse af plads, og simple betalingssystem sikret før udlevering.
+
+\pic{bike2}{0.4}{Eksempel på systemets udførelse}{ud}
+
+Systemet forestilles derfor implementeret på Århus universitet, Katrinebjerg, hvor der gennem længere tid har været problemer med specielt pladsmangel og opbevaring af cykler. Vores system vil derfor være meget relevant ift. at løse dette dilemma, da de studerende jo selvfølgelig har brug for transport til universitetet, men kan have svært ved at finde områder til at opbevare deres cykler i, under undervisningen.
+
+\pic{bike1}{0.2}{Indre opbygning af system}{op}
+
+\subsubsection{Use Case diagram}
+%Lav et Use Case diagram med use cases og aktører her
+Her ses vores aktør-kontekst ikke-diagram for vores system. Vi har indkluderet tre(3) Use Cases med tihørende aktører, hvoraf Use Case et(1) og to(2) vil blive uddybbet i Fully-Dressed Use Cases i 1.1.3:
+\pic{uc}{0.9}{Use Case Diagram}{ucd}
+
+\subsubsection{Fully Dressed Use Cases}
+%Lav 2 use cases fully dressed
+Her under er beskrevet 3 use cases for systemet, der dækker de mest almindelige interaktioner. De 2 første er for den daglige brug, med fully dresssed, hvor UC3 er lavet som en brief, da vi ikke anser denne for lige så vigtig da den omhandler maintenance.
+
+
+%Use case 1: tjek cykel ind
+\begin{table}[H]
+\begin{tabularx}{\textwidth}{|l|X|}\rowcolor[HTML]{DFDFDF}\hline
+    Name:                           & UC1: Tjek cykel ind \\ \hline
+    Mål:                            & Modtag cykel fra Kunde  \\\hline \rowcolor[HTML]{DFDFDF}
+    Initiering:                     & Kunde sætter cykel i modtagerenhed  \\\hline 
+    Aktør:                          & Kunde  \\\hline\rowcolor[HTML]{DFDFDF}
+    Antal Samtidige & Ingen \\\rowcolor[HTML]{DFDFDF} Forekomster:    &  \\\hline 
+    Prækondition:                   & Ingen igangværende parkering  \\\hline\rowcolor[HTML]{DFDFDF}
+    Postkondition:                  & Cykel er parkeret \\\hline 
+    Hovedscenarie:                  & 
+    \setlist{nolistsep}
+    \begin{enumerate}
+        \item Systemet modtager cykel i modtagerenheden
+        \item Kunden sætter sit AU ID-kort op til kortlæseren
+        \item Systemet godkender AU ID-kortet på AU serveren
+        \begin{itemize}
+            \item {[Undtagelse 1: AU ID-kort afvist]}
+            \item {[Undtagelse 2: AU ID-kort allerede i brug]}
+        \end{itemize}
+        \item Systemet bestemmer parkeringsplads \& parkeringsetage til cykel
+        \begin{itemize}
+            \item {[Undtagelse 3: Ingen plads i parkeringsenheden]}
+        \end{itemize}
+        \item Cykel parkeringsplads linkes til AU ID-kortet
+        \item Systemet åbner modtagerindgangen
+        \item Modtagerenheden aflevere cykel i elevatoren
+        \item Systemet lukker modtagerindgangen
+        \item Elevatoren bevæger cykel ned til bestemt parkeringsetage
+        \item Elevatoren drejer cykel til bestemt parkeringsplads
+        \item Elevatoren parkere cykel på bestemt parkeringsplads
+        \item Elevatoren returnerer til modtagerenhed
+        \item Systemet informere brugeren om parkeringssucces
+    \end{enumerate} \\\hline\rowcolor[HTML]{DFDFDF}
+    Undtagelser:                    & {[Undtagelse 1: AU ID-kort afvist]}
+    \setlist{nolistsep}
+    \begin{enumerate}
+        \item Systemet informere brugeren om at ID'et ikke er registreret
+        \item noget mere
+    \end{enumerate}
+                                    {[Undtagelse 2: AU ID-kort allerede i brug]}
+    \setlist{nolistsep}
+    \begin{enumerate}
+        \item noget
+        \item noget mere
+    \end{enumerate}
+                                    {[Undtagelse 3: Ingen plads i parkeringsenhed]} 
+    \setlist{nolistsep}
+    \begin{enumerate}
+        \item noget andet
+        \item noget helt andet
+    \end{enumerate}
+    \\ \hline
+\end{tabularx}
+    \caption{Fully dressed UC1}
+    \label{tab:UC1}
+\end{table}
+
+
+%Use case 2: Tjek cykel ud
+\begin{table}[H]
+\begin{tabularx}{\textwidth}{|l|X|}\rowcolor[HTML]{DFDFDF}\hline
+    Name:                           & UC2: Tjek cykel ud  \\ \hline
+    Mål:                            & Aflevere cyklen igen til Kundeen  \\\hline \rowcolor[HTML]{DFDFDF}
+    Initiering:                     & Kunde sætter sit AU ID kort op til kortlæseren  \\\hline 
+    Aktør:                          & Primær: Kunde \newline 
+                                    Sekundær: AU ID-kort, Cykel, AU-Server \\ \hline\rowcolor[HTML]{DFDFDF}
+    Antal Samtidige & Ingen \\\rowcolor[HTML]{DFDFDF} Forekomster:    &  \\\hline 
+    Prækondition:                   & Cykel er parkeret og ingen fejl i systemet  \\ \hline\rowcolor[HTML]{DFDFDF}
+    Postkondition:                  & Cykel er modtaget uden fejl \\\hline 
+    Hovedscenarie:                  & 
+    \setlist{nolistsep}
+    \begin{enumerate}
+        \item Kunde sætter sit AU ID kort op til kortlæseren
+        \begin{itemize}
+            \item {[Undtagelse 1: AU ID-kort ikke tjekket ind]}
+        \end{itemize}
+        \item System finder cykel parkeringsplads ud fra AU ID-kort
+        \item Elevator bevæger sig til parkeringsetagen
+        \item Elevator drejer sig til bestemt parkeringsplads
+        \item Elevator tager cykel fra parkeringsplads
+        \item Elevator returnerer til modtagerenhed
+        \item System åbner modtagerindgang
+        \item Elevator afleverer cykel i modtagerenhed
+        \item System lukker modtagerindgang
+        \item Kunden tager sin cykel
+        \item System registrer cykel er taget
+        \item System informerer om afleveringens succes
+    \end{enumerate} \\\hline\rowcolor[HTML]{DFDFDF}
+    Undtagelser:                    & {[Undtagelse 1: AU ID-kort ikke tjekket ind]} 
+    \setlist{nolistsep}
+    \begin{enumerate}
+        \item System informere brugeren om at den ikke har en cykel tjekket ind på fremviste ID-kort og at der henvises til support
+    \end{enumerate}\\ \hline
+\end{tabularx}
+    \caption{Fully dressed UC2}
+    \label{tab:UC2}
+\end{table}
+
+
+%Use case 3: Tjek cykler
+\begin{table}[H]
+\begin{tabularx}{\textwidth}{|l|X|}\rowcolor[HTML]{DFDFDF}\hline
+    Name:                           & UC3: Tjek cykler  \\ \hline
+    Aktører:                        & Primær: Maintenance  \\\hline \rowcolor[HTML]{DFDFDF}
+    UC beskrivelse:                 &   
+    Maintenance har mulighed for at override den almindelige drift, og tjekke op på systemets tilstand. De kan tjekke om cykler er væltet inden i parkeringsenheden, hente cykler uden AU ID-kort og override modtagerindgangen, så det er muligt at komme ind i selv parkeringsenheden. Maintenancen override skal kræve en fysisk nøgle samt et maintenance ID-kort, for at øge sikkerheden
+    \\\hline 
+\end{tabularx}
+    \caption{Brief UC3}
+    \label{tab:UC3}
+\end{table}
+
+\subsection{Design prioriteter}
+%Fastlæg de generelle design prioritering for jeres systemdesign med udgangspunkt i nedenstående liste, hvert design krav skal beskrives, så det er målbart og de skal indbyrdes prioriteres med en skala (1-5):
+%• Performance (speed) – hvad er krav til jeres design som responstider og eksekvering?
+%• Cost (price and time) – hvad er kravet til udviklingsomkostninger, kostpris og time-to-market?
+%• Andre kvalitetskrav, som kan medtages i prioritering (vælg mindst 3):
+
+Performance
+Cost
+
+\begin{tikzpicture}
+    \matrix (magic) [matrix of nodes,nodes={minimum width=3cm,minimum height=1cm,draw,very thin},draw,inner sep=0]
+    {   |[fill=red!70]|8 & 1 & 6 \\
+        3 & |[left color=cyan,right color=orange]| 5 & 7 \\
+        4 & 9 & |[text=red,blue]|2 \\
+    };
+    \draw[thick,violet] (magic-2-1.east) to[out=180,in=270,looseness=0.5] (magic-2-1.north) to[out=270,in=0,looseness=0.5] (magic-2-1.west) to[out=0,in=90,looseness=0.5] (magic-2-1.south) to[out=90,in=180,looseness=0.5] (magic-2-1.east);
+    \draw[rounded corners=2pt,densely dashed,green!50!gray] ($(magic-1-2.center)+(-0.15,-0.25)$) rectangle ($(magic-1-3.center)+(0.15,0.25)$);
+\end{tikzpicture}
+
+
+\end{document}

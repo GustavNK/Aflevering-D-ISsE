@@ -1,0 +1,81 @@
+\documentclass{article}
+
+\usepackage{subfiles}
+\usepackage{blindtext}
+
+\usepackage{tikz}
+\usetikzlibrary{calc}
+\usetikzlibrary{matrix}
+\usepackage{tikz-uml}
+\usepackage{graphicx}
+\usepackage{xcolor,colortbl}
+
+\usepackage{tabularx}
+\usepackage{enumitem}
+\usepackage{float}
+\usepackage{geometry}
+ \geometry{
+ a4paper,
+ total={170mm,257mm},
+ left=  30mm,
+ top=   40mm,
+ right= 30mm,
+ bottom=40mm
+ }
+
+\graphicspath{{fig/}{../fig/}}
+
+\newcommand{\pic}[4]{
+	\begin{figure}[!htb]
+		\centering
+		\includegraphics[width=#2\textwidth]{#1}
+		\caption{#3}
+		\label{#4}
+	\end{figure}
+	\hspace*{\fill}
+} 
+
+\begin{document}
+\begin{titlepage}
+    
+    \begin{center}
+        \vspace*{1cm}
+ 
+        \Huge
+        \textbf{Aflevering D - System Arkitektur Design}\\
+        \Large
+        Underground Bike Parking
+ 
+        \vspace{0.5cm}
+        \LARGE
+        F20 - I2ISE - 01 \\
+        14. april 2020
+ 
+        \vspace{1.5cm}
+        
+        \large
+        \textbf{Gylle Nørgaard Knudsen - 201807736 \\
+Andreas Stavning Erslev - 201705103\\
+Christian Bach Johansen - 2017\\
+Rasmus Møller Nielsen - 201909856}
+        
+        \vfill
+        \includegraphics[width=0.3\textwidth]{au}
+        
+        \vspace{1cm}
+        Hold 42
+ 
+    \end{center}
+\end{titlepage}
+
+\section{Specifikation og design prioritering}
+\subfile{sec/sec1.tex}
+
+\section{System arkitekturdesign}
+\subfile{sec/sec2.tex}
+
+\section{SW design og implementering}
+\subfile{sec/sec3.tex}
+
+
+\end{document}
